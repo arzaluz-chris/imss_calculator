@@ -30,3 +30,4 @@ function calcularPuntaje() {
     
     alert(`Tu puntaje es de: ${puntajeBase.toFixed(2)}`);
 }
+
