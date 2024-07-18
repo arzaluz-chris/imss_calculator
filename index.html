@@ -16,17 +16,27 @@
             <label for="promedio">Promedio Académico:</label>
             <input type="number" id="promedio" name="promedio" step="0.01" min="0" max="100" required>
             
-            <label for="trabajadorIMSS">¿Eres trabajador del IMSS?</label>
-            <input type="checkbox" id="trabajadorIMSS" name="trabajadorIMSS">
-            
-            <label for="hijoTrabajadorIMSS">¿Eres hijo de trabajador del IMSS?</label>
-            <input type="checkbox" id="hijoTrabajadorIMSS" name="hijoTrabajadorIMSS">
-            
-            <label for="internadoIMSS">¿Realizaste tu internado en el IMSS?</label>
-            <input type="checkbox" id="internadoIMSS" name="internadoIMSS">
-            
-            <label for="servicioSocialIMSS">¿Realizaste tu servicio social en el IMSS?</label>
-            <input type="checkbox" id="servicioSocialIMSS" name="servicioSocialIMSS">
+            <div class="checkboxes">
+                <label>
+                    <input type="checkbox" id="trabajadorIMSS" name="trabajadorIMSS">
+                    ¿Eres trabajador del IMSS?
+                </label>
+                
+                <label>
+                    <input type="checkbox" id="hijoTrabajadorIMSS" name="hijoTrabajadorIMSS">
+                    ¿Eres hijo de trabajador del IMSS?
+                </label>
+                
+                <label>
+                    <input type="checkbox" id="internadoIMSS" name="internadoIMSS">
+                    ¿Realizaste tu internado en el IMSS?
+                </label>
+                
+                <label>
+                    <input type="checkbox" id="servicioSocialIMSS" name="servicioSocialIMSS">
+                    ¿Realizaste tu servicio social en el IMSS?
+                </label>
+            </div>
             
             <div class="buttons">
                 <button type="button" onclick="calcularPuntaje()">Calcular puntaje</button>
@@ -37,3 +47,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
