@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Puntaje IMSS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Puntaje IMSS</h1>
+        <form id="puntajeForm">
+            <label for="enarm">Puntaje ENARM:</label>
+            <input type="number" id="enarm" name="enarm" step="0.01" min="0" max="100" required>
+            
+            <label for="promedio">Promedio Académico:</label>
+            <input type="number" id="promedio" name="promedio" step="0.01" min="0" max="100" required>
+            
+            <label for="trabajadorIMSS">¿Eres trabajador del IMSS?</label>
+            <input type="checkbox" id="trabajadorIMSS" name="trabajadorIMSS">
+            
+            <label for="hijoTrabajadorIMSS">¿Eres hijo de trabajador del IMSS?</label>
+            <input type="checkbox" id="hijoTrabajadorIMSS" name="hijoTrabajadorIMSS">
+            
+            <label for="internadoIMSS">¿Realizaste tu internado en el IMSS?</label>
+            <input type="checkbox" id="internadoIMSS" name="internadoIMSS">
+            
+            <label for="servicioSocialIMSS">¿Realizaste tu servicio social en el IMSS?</label>
+            <input type="checkbox" id="servicioSocialIMSS" name="servicioSocialIMSS">
+            
+            <div class="buttons">
+                <button type="button" onclick="calcularPuntaje()">Calcular puntaje</button>
+                <button type="reset">Limpiar campos</button>
+            </div>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
