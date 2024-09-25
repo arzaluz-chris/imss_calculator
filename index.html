@@ -4,46 +4,142 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Puntaje IMSS</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #ff99cc, #cc66ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calculator {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .additional-button {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .additional-button.active {
+            background-color: #ff66b2;
+            color: white;
+        }
+        .action-button {
+            background-color: #cc66ff;
+            color: white;
+        }
+        .action-button:hover {
+            background-color: #b24cd6;
+        }
+        #result {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Calculadora de Puntaje IMSS</h1>
-        <form id="puntajeForm">
-            <label for="enarm">Puntaje ENARM:</label>
-            <input type="number" id="enarm" name="enarm" step="0.01" min="0" max="100" required>
-            
-            <label for="promedio">Promedio Académico:</label>
-            <input type="number" id="promedio" name="promedio" step="0.01" min="0" max="100" required>
-            
-            <div class="checkboxes">
-                <label>
-                    <input type="checkbox" id="trabajadorIMSS" name="trabajadorIMSS">
-                    ¿Eres trabajador del IMSS?
-                </label>
-                
-                <label>
-                    <input type="checkbox" id="hijoTrabajadorIMSS" name="hijoTrabajadorIMSS">
-                    ¿Eres hijo de trabajador del IMSS?
-                </label>
-                
-                <label>
-                    <input type="checkbox" id="internadoIMSS" name="internadoIMSS">
-                    ¿Realizaste tu internado en el IMSS?
-                </label>
-                
-                <label>
-                    <input type="checkbox" id="servicioSocialIMSS" name="servicioSocialIMSS">
-                    ¿Realizaste tu servicio social en el IMSS?
-                </label>
-            </div>
-            
-            <div class="buttons">
-                <button type="button" onclick="calcularPuntaje()">Calcular puntaje</button>
-                <button type="reset">Limpiar campos</button>
-            </div>
-        </form>
+    <div class="calculator">
+        <h2>Rubros básicos</h2>
+        <input type="number" id="enarm" placeholder="Puntaje ENARM (0-100)" min="0" max="100" step="0.01">
+        <input type="number" id="promedio" placeholder="Promedio académico (0-100)" min="0" max="100" step="0.01">
+        
+        <h2>Rubros adicionales</h2>
+        <button id="trabajador" class="additional-button">Soy trabajador IMSS</button>
+        <button id="hijo" class="additional-button">Soy hijo de trabajador IMSS</button>
+        <button id="internado" class="additional-button">Realicé mi internado en el IMSS</button>
+        <button id="servicio" class="additional-button">Realicé mi servicio social en el IMSS</button>
+        
+        <button id="calcular" class="action-button">Calcular puntaje</button>
+        <button id="limpiar" class="action-button">Limpiar campos</button>
     </div>
-    <script src="script.js"></script>
+    
+    <div id="result"></div>
+
+    <script>
+        const additionalButtons = document.querySelectorAll('.additional-button');
+        const calcularBtn = document.getElementById('calcular');
+        const limpiarBtn = document.getElementById('limpiar');
+        const resultDiv = document.getElementById('result');
+
+        additionalButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('active');
+                if (button.id === 'trabajador' && button.classList.contains('active')) {
+                    document.getElementById('hijo').classList.remove('active');
+                } else if (button.id === 'hijo' && button.classList.contains('active')) {
+                    document.getElementById('trabajador').classList.remove('active');
+                }
+            });
+        });
+
+        calcularBtn.addEventListener('click', () => {
+            const enarm = parseFloat(document.getElementById('enarm').value) || 0;
+            const promedio = parseFloat(document.getElementById('promedio').value) || 0;
+            
+            let puntajeBase = (enarm + promedio) / 2;
+            let puntajeAdicional = 0;
+
+            if (document.getElementById('trabajador').classList.contains('active')) {
+                puntajeAdicional += 1.0;
+            } else if (document.getElementById('hijo').classList.contains('active')) {
+                puntajeAdicional += 0.75;
+            }
+
+            if (document.getElementById('internado').classList.contains('active')) {
+                puntajeAdicional += 0.25;
+            }
+
+            if (document.getElementById('servicio').classList.contains('active')) {
+                puntajeAdicional += 0.75;
+            }
+
+            const puntajeFinal = puntajeBase + puntajeAdicional;
+
+            resultDiv.innerHTML = `<p>Tu puntaje IMSS es: ${puntajeFinal.toFixed(2)}</p>`;
+            resultDiv.style.display = 'block';
+
+            setTimeout(() => {
+                resultDiv.style.display = 'none';
+            }, 3000);
+        });
+
+        limpiarBtn.addEventListener('click', () => {
+            document.getElementById('enarm').value = '';
+            document.getElementById('promedio').value = '';
+            additionalButtons.forEach(button => button.classList.remove('active'));
+        });
+    </script>
 </body>
 </html>
